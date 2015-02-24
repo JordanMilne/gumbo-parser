@@ -280,3 +280,15 @@ void gumbo_destroy_errors(GumboParser* parser) {
   }
   gumbo_vector_destroy(parser, &parser->_output->errors);
 }
+
+GumboErrorType gumbo_get_error_type(void* stuff)
+{
+  GumboError* error = (GumboError*)stuff;
+  return error->type;
+}
+
+const char* gumbo_get_error_text(void* stuff)
+{
+  GumboError* error = (GumboError*)stuff;
+  return error->original_text;
+}

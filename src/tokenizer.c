@@ -1028,7 +1028,7 @@ static StateResult handle_tag_open_state(
       gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_COMMENT);
       clear_temporary_buffer(parser);
       append_char_to_temporary_buffer(parser, '?');
-      tokenizer_add_parse_error(parser, GUMBO_ERR_TAG_STARTS_WITH_QUESTION);
+      //tokenizer_add_parse_error(parser, GUMBO_ERR_TAG_STARTS_WITH_QUESTION);
       return NEXT_CHAR;
     default:
       if (is_alpha(c)) {

@@ -1229,11 +1229,11 @@ static void add_formatting_element(GumboParser* parser, const GumboNode* node) {
       parser, node, &earliest_identical_element);
 
   // Noah's Ark clause: if there're at least 3, remove the earliest.
-  if (num_identical_elements >= 3) {
+  /*if (num_identical_elements >= 3) {
     gumbo_debug("Noah's ark clause: removing element at %d.\n",
                 earliest_identical_element);
     gumbo_vector_remove_at(parser, earliest_identical_element, elements);
-  }
+  }*/
 
   gumbo_vector_add(parser, (void*) node, elements);
 }
@@ -1603,7 +1603,7 @@ static bool implicitly_close_tags(
   bool result = true;
   generate_implied_end_tags(parser, target);
   if (!node_qualified_tag_is(get_current_node(parser), target_ns, target)) {
-    parser_add_parse_error(parser, token);
+    //parser_add_parse_error(parser, token);
     while (!node_qualified_tag_is(get_current_node(parser), target_ns, target)) {
       pop_current_node(parser);
     }
@@ -1853,10 +1853,10 @@ static bool adoption_agency_algorithm(GumboParser* parser, GumboToken* token, Gu
       gumbo_debug("Element not in scope.\n");
       return false;
     }
-
+    
     // Step 8
     if (formatting_node != get_current_node(parser)) {
-      parser_add_parse_error(parser, token);  // But continue onwards.
+      // parser_add_parse_error(parser, token);  // But continue onwards.
     }
     assert(formatting_node);
     assert(!node_html_tag_is(formatting_node, GUMBO_TAG_HTML));
@@ -2503,7 +2503,7 @@ static bool handle_in_body(GumboParser* parser, GumboToken* token) {
             TAG(RB), TAG(RP), TAG(RT), TAG(RTC), TAG(TBODY), TAG(TD),
             TAG(TFOOT), TAG(TH), TAG(THEAD), TAG(TR),
             TAG(BODY), TAG(HTML) })) {
-        parser_add_parse_error(parser, token);
+        //parser_add_parse_error(parser, token);
         success = false;
         break;
       }
@@ -2693,7 +2693,7 @@ static bool handle_in_body(GumboParser* parser, GumboToken* token) {
     int has_matching_a = find_last_anchor_index(parser, &last_a);
     if (has_matching_a) {
       assert(has_matching_a == 1);
-      parser_add_parse_error(parser, token);
+      //parser_add_parse_error(parser, token);
       adoption_agency_algorithm(parser, token, GUMBO_TAG_A);
       // The adoption agency algorithm usually removes all instances of <a>
       // from the list of active formatting elements, but in case it doesn't,
@@ -3007,7 +3007,7 @@ static bool handle_in_body(GumboParser* parser, GumboToken* token) {
         while (node != pop_current_node(parser));  // Pop everything.
         return true;
       } else if (is_special_node(node)) {
-        parser_add_parse_error(parser, token);
+        //parser_add_parse_error(parser, token);
         ignore_token(parser);
         return false;
       }
@@ -4121,14 +4121,14 @@ GumboOutput* gumbo_parse_fragment(
     assert(state->_reprocess_current_token ||
            token.type != GUMBO_TOKEN_START_TAG ||
            token.v.start_tag.attributes.data == NULL);
-
+/*
     if (!state->_self_closing_flag_acknowledged) {
       GumboError* error = parser_add_parse_error(&parser, &token);
       if (error) {
         error->type = GUMBO_ERR_UNACKNOWLEDGED_SELF_CLOSING_TAG;
       }
     }
-
+*/
     ++loop_count;
     assert(loop_count < 1000000000);
 
